@@ -28,16 +28,35 @@ Just add it to your ``rebar.config`` deps:
 And then do the usual:
 
 ```bash
-    $ rebar get-deps
-    $ rebar compile
+    $ make compile
 ```
 
 
 ## Usage
 
+The following are all done from the LFE REPL:
+
+```
+$ make repl-no-deps
+Starting an LFE REPL ...
+Erlang/OTP 17 [erts-6.2] [source] [64-bit] [smp:4:4] [async-threads:10] ...
+
+LFE Shell V6.2 (abort with ^G)
+>
+```
+
 Encode simple LFE data to JSON:
 
 ```cl
+> (ljson:print (ljson:encode 'a))
+<<"\"a\"">>
+ok
+> (ljson:print (ljson:encode "a"))
+<<"[97]">>
+ok
+> (ljson:print (ljson:encode 1))
+<<"1">>
+ok
 > (ljson:print (ljson:encode #(a b)))
 <<"{\"a\":\"b\"}">>
 ok
@@ -50,6 +69,15 @@ ok
 Decode simple JSON:
 
 ```cl
+> (ljson:print (ljson:decode #b("\"a\"")))
+<<"a">>
+ok
+> (ljson:print (ljson:decode #b("[97]")))
+"a"
+ok
+> (ljson:print (ljson:decode #b("1")))
+1
+ok
 > (ljson:print (ljson:decode "{\"a\": \"b\"}"))
 {<<"a">>,<<"b">>}
 ok
