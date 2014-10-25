@@ -34,7 +34,7 @@ And then do the usual:
 
 ## Usage
 
-The following are all done from the LFE REPL:
+The following usage examples are all done from the LFE REPL:
 
 ```
 $ make repl-no-deps
