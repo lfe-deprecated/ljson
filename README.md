@@ -31,12 +31,6 @@ And then do the usual:
 
 ## Usage
 
-Create a new data structure:
-
-```cl
-
-```
-
 Encode simple LFE data to JSON:
 
 ```cl
