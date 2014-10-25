@@ -229,6 +229,7 @@ The Argonauts that are rowing this thing consist of the following:
 * mochijson2 - for encoding
 * jiffy - for decoding
 * ej - for extracing and updating JSON data elements
+* jsx - for ``prettify`` and ``minify``
 * dict - (wrapped as ``pairs``) for large key/value lists
 * proplists/lists of tuples - for small key/value lists
 
