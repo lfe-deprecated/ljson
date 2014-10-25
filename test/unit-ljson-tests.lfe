@@ -8,5 +8,8 @@
 
 (include-lib "ltest/include/ltest-macros.lfe")
 
-(deftest my-adder
-  (is-equal 4 (: ljson my-adder 2 2)))
+(deftest new-empty
+  (is-equal "" (ljson:new)))
+
+(deftest new-data
+  (is-equal "" (ljson:new '(""))))

@@ -139,8 +139,6 @@ LFE REPL -- you'll need to put it all on one line):
   ],
   \"Children\": [],
   \"Spouse\": null}")
-> (set json-data "{\"First Name\": \"John\", \"Last Name\": \"Smith\", \"Is Alive?\": true, \"Age\": 25, \"Height_cm\": 167.6, \"Address\": {\"Atreet Address\": \"21 2nd Street\", \"City\": \"New York\", \"State\": \"NY\", \"Postal Code\": \"10021-3100\"}, \"Phone Numbers\": [{\"Type\": \"home\", \"Number\": \"212 555-1234\"}, {\"Type\": \"office\", \"Number\": \"646 555-4567\"} ], \"Children\": [], \"Spouse\": null}")
-> (set data (ljson:decode json-data))
 > (set data (ljson:decode json-data))
 (#(#B(70 105 114 115 116 32 78 97 109 101) #B(74 111 104 110))
  #(#B(76 97 115 116 32 78 97 109 101) #B(83 109 105 116 104))
