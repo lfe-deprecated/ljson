@@ -4,9 +4,13 @@
 
 ## Introduction
 
-This library was raised by Chiron to avenge the crimes against JSON and its
-heirs in the Erlang world. It is destined to search for Golden Macro, as
-revealed by the Cloud Goddess.
+This library was educated by
+[Chiron](http://en.wikipedia.org/wiki/Chiron#Students)
+to avenge the crimes against JSON and its heirs in the Erlang world. It is
+destined to search for
+[Golden Macro](http://en.wikipedia.org/wiki/Golden_Fleece), as
+revealed by the
+[Cloud Goddess](http://en.wikipedia.org/wiki/Nephele).
 
 
 ## Installation
