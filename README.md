@@ -5,7 +5,7 @@
 ## Introduction
 
 This library was raised by Chiron to avenge the crimes against JSON and its
-heirs in the Erlang world. It is destined to search for Golden Parse, as
+heirs in the Erlang world. It is destined to search for Golden Macro, as
 revealed by the Cloud Goddess.
 
 
@@ -31,4 +31,49 @@ And then do the usual:
 
 ## Usage
 
-TBD.
+Create a new data structure:
+
+```cl
+
+```
+
+Encode simple to JSON:
+
+```cl
+> (io:format "~p~n" (list (ljson:encode #(a b))))
+<<"{\"a\":\"b\"}">>
+ok
+>
+```
+
+Decode simple JSON:
+
+```cl
+> (io:format "~p~n" (list (ljson:decode "{\"a\": \"b\"}")))
+{<<"a">>,<<"b">>}
+ok
+```
+
+Extract elements from JSON:
+
+```cl
+
+```
+
+Extract elements from data structure:
+
+```cl
+
+```
+
+## Under the Deck
+
+The Argonauts that are rowing this thing consist of the following:
+
+* mochijson2 - for encoding
+* jiffy - for decoding
+* ej - for extracing and updating JSON data elements
+* dict - (wrapped as ``pairs``) for large key/value lists
+* proplists/lists of tuples - for small key/value lists
+
+
