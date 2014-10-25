@@ -50,3 +50,9 @@
 
 (defun print (data)
   (io:format "~p~n" (list data)))
+
+(defun prettify (data)
+  (io:format "~s~n" (list (jsx:prettify data))))
+
+(defun minify (data)
+  (jsx:minify data))
