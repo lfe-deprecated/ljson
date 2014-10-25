@@ -177,12 +177,37 @@ ok
 >
 ```
 
-Now let's take it full circle:
+Now let's take it full circle by encoding it again:
 
 ```cl
-> (ljson:print (ljson:encode data))
-<<"{\"First Name\":\"John\",\"Last Name\":\"Smith\"...">>
+> (ljson:prettify (ljson:encode data))
+{
+  "First Name": "John",
+  "Last Name": "Smith",
+  "Is Alive?": true,
+  "Age": 25,
+  "Height_cm": 167.6,
+  "Address": {
+    "Atreet Address": "21 2nd Street",
+    "City": "New York",
+    "State": "NY",
+    "Postal Code": "10021-3100"
+  },
+  "Phone Numbers": [
+    {
+      "Type": "home",
+      "Number": "212 555-1234"
+    },
+    {
+      "Type": "office",
+      "Number": "646 555-4567"
+    }
+  ],
+  "Children": [],
+  "Spouse": null
+}
 ok
+>
 ```
 
 Extract elements from JSON:
