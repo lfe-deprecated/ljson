@@ -37,11 +37,14 @@ Create a new data structure:
 
 ```
 
-Encode simple to JSON:
+Encode simple LFE data to JSON:
 
 ```cl
 > (io:format "~p~n" (list (ljson:encode #(a b))))
 <<"{\"a\":\"b\"}">>
+ok
+> (io:format "~p~n" (list (ljson:encode '(#(a b) #(c d)))))
+<<"{\"a\":\"b\",\"c\":\"d\"}">>
 ok
 >
 ```
@@ -52,6 +55,16 @@ Decode simple JSON:
 > (io:format "~p~n" (list (ljson:decode "{\"a\": \"b\"}")))
 {<<"a">>,<<"b">>}
 ok
+> (io:format "~p~n" (list (ljson:decode "{\"a\":\"b\",\"c\":\"d\"}")))
+[{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
+ok
+> (io:format "~p~n"
+    (list
+      (ljson:decode
+      	#B(123 34 97 34 58 34 98 34 44 34 99 34 58 34 100 34 125))))
+[{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
+ok
+>
 ```
 
 Extract elements from JSON:
