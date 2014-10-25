@@ -47,3 +47,6 @@
 
 (defun pairs->list (pairs)
   (dict:to_list pairs))
+
+(defun print (data)
+  (io:format "~p~n" (list data)))

@@ -38,10 +38,10 @@ And then do the usual:
 Encode simple LFE data to JSON:
 
 ```cl
-> (io:format "~p~n" (list (ljson:encode #(a b))))
+> (ljson:print (ljson:encode #(a b)))
 <<"{\"a\":\"b\"}">>
 ok
-> (io:format "~p~n" (list (ljson:encode '(#(a b) #(c d)))))
+> (ljson:print (ljson:encode '(#(a b) #(c d))))
 <<"{\"a\":\"b\",\"c\":\"d\"}">>
 ok
 >
@@ -50,16 +50,15 @@ ok
 Decode simple JSON:
 
 ```cl
-> (io:format "~p~n" (list (ljson:decode "{\"a\": \"b\"}")))
+> (ljson:print (ljson:decode "{\"a\": \"b\"}"))
 {<<"a">>,<<"b">>}
 ok
-> (io:format "~p~n" (list (ljson:decode "{\"a\":\"b\",\"c\":\"d\"}")))
+> (ljson:print (ljson:decode "{\"a\":\"b\",\"c\":\"d\"}"))
 [{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
 ok
-> (io:format "~p~n"
-    (list
-      (ljson:decode
-      	#B(123 34 97 34 58 34 98 34 44 34 99 34 58 34 100 34 125))))
+> (ljson:print
+    (ljson:decode
+	    #B(123 34 97 34 58 34 98 34 44 34 99 34 58 34 100 34 125)))
 [{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
 ok
 >
