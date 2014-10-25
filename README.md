@@ -57,6 +57,12 @@ ok
 > (ljson:print (ljson:encode 1))
 <<"1">>
 ok
+> (ljson:print (ljson:encode 3.14))
+<<"3.14">>
+ok
+> (ljson:print (ljson:encode '(a b c 42)))
+<<"[\"a\",\"b\",\"c\",42]">>
+ok
 > (ljson:print (ljson:encode #(a b)))
 <<"{\"a\":\"b\"}">>
 ok
@@ -77,6 +83,12 @@ ok
 ok
 > (ljson:print (ljson:decode #b("1")))
 1
+ok
+> (ljson:print (ljson:decode #b("3.14")))
+3.14
+ok
+> (ljson:print (ljson:decode #b("[\"a\",\"b\",\"c\",42]")))
+[<<"a">>,<<"b">>,<<"c">>,42]
 ok
 > (ljson:print (ljson:decode "{\"a\": \"b\"}"))
 {<<"a">>,<<"b">>}
