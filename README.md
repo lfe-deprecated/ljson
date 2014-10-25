@@ -78,6 +78,12 @@ Decode simple JSON:
 > (ljson:print (ljson:decode #b("\"a\"")))
 <<"a">>
 ok
+
+;; ljson can just as easily decode string as binary:
+> (ljson:print (ljson:decode "\"a\"")))
+<<"a">>
+ok
+
 > (ljson:print (ljson:decode #b("[97]")))
 "a"
 ok
@@ -102,6 +108,83 @@ ok
 [{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
 ok
 >
+```
+
+Decode a JSON data structure (note that, for formatting purposes, the data
+below has been presented separated with newlines; this won't work in the
+LFE REPL -- you'll need to put it all on one line):
+
+```cl
+> (set json-data "{
+  \"First Name\": \"John\",
+  \"Last Name\": \"Smith\",
+  \"Is Alive?\": true,
+  \"Age\": 25,
+  \"Height_cm\": 167.6,
+  \"Address\": {
+    \"Atreet Address\": \"21 2nd Street\",
+    \"City\": \"New York\",
+    \"State\": \"NY\",
+    \"Postal Code\": \"10021-3100\"
+  },
+  \"Phone Numbers\": [
+    {
+      \"Type\": \"home\",
+      \"Number\": \"212 555-1234\"
+    },
+    {
+      \"Type\": \"office\",
+      \"Number\": \"646 555-4567\"
+    }
+  ],
+  \"Children\": [],
+  \"Spouse\": null}")
+> (set json-data "{\"First Name\": \"John\", \"Last Name\": \"Smith\", \"Is Alive?\": true, \"Age\": 25, \"Height_cm\": 167.6, \"Address\": {\"Atreet Address\": \"21 2nd Street\", \"City\": \"New York\", \"State\": \"NY\", \"Postal Code\": \"10021-3100\"}, \"Phone Numbers\": [{\"Type\": \"home\", \"Number\": \"212 555-1234\"}, {\"Type\": \"office\", \"Number\": \"646 555-4567\"} ], \"Children\": [], \"Spouse\": null}")
+> (set data (ljson:decode json-data))
+> (set data (ljson:decode json-data))
+(#(#B(70 105 114 115 116 32 78 97 109 101) #B(74 111 104 110))
+ #(#B(76 97 115 116 32 78 97 109 101) #B(83 109 105 116 104))
+ #(#B(73 115 32 65 108 105 118 101 63) true)
+ #(#B(65 103 101) 25)
+ #(#B(72 101 105 103 104 116 95 99 109) 167.6)
+ #(#B(65 100 100 114 101 115 115)
+   #((#(#B(65 116 114 101 101 116 32 65 100 100 114 101 115 115)
+        #B(50 49 32 50 110 100 32 83 116 114 101 101 116))
+      #(#B(67 105 116 121) #B(78 101 119 32 89 111 114 107))
+      #(#B(83 116 97 116 101) #B(78 89))
+      #(#B(80 111 115 116 97 108 32 67 111 100 101)
+        #B(49 48 48 50 49 45 51 49 48 48)))))
+ #(#B(80 104 111 110 101 32 78 117 109 98 101 114 115)
+   (#((#(#B(84 121 112 101) #B(104 111 109 101))
+       #(#B(78 117 109 98 101 114) #B(50 49 50 32 53 53 53 45 49 50 51 52))))
+    #((#(#B(84 121 112 101) #B(111 102 102 105 99 101))
+       #(#B(78 117 109 98 101 114) #B(54 52 54 32 53 53 53 45 52 53 54 55))))))
+ #(#B(67 104 105 108 100 114 101 110) ())
+ #(#B(83 112 111 117 115 101) null))
+> (ljson:print data)
+ {<<"Is Alive?">>,true},
+ {<<"Age">>,25},
+ {<<"Height_cm">>,167.6},
+ {<<"Address">>,
+  {[{<<"Atreet Address">>,<<"21 2nd Street">>},
+    {<<"City">>,<<"New York">>},
+    {<<"State">>,<<"NY">>},
+    {<<"Postal Code">>,<<"10021-3100">>}]}},
+ {<<"Phone Numbers">>,
+  [{[{<<"Type">>,<<"home">>},{<<"Number">>,<<"212 555-1234">>}]},
+   {[{<<"Type">>,<<"office">>},{<<"Number">>,<<"646 555-4567">>}]}]},
+ {<<"Children">>,[]},
+ {<<"Spouse">>,null}]
+ok
+>
+```
+
+Now let's take it full circle:
+
+```cl
+> (ljson:print (ljson:encode data))
+<<"{\"First Name\":\"John\",\"Last Name\":\"Smith\"...">>
+ok
 ```
 
 Extract elements from JSON:
