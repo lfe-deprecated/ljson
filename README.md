@@ -264,7 +264,9 @@ Let's do the same, but this time from LFE data:
 ok
 ```
 
-Extract elements from LFE data structure:
+
+Extract elements from the original converted data structure as well as
+our LFE data structure we just entered directly, above:
 
 ```cl
 > (ljson:print (ljson:get #("First Name") data))
@@ -276,7 +278,17 @@ ok
 > (ljson:print (ljson:get #(("Phone Numbers") first "Type") data))
 <<"home">>
 ok
+> (ljson:print (ljson:get #("First Name") lfe-data))
+<<"Jón"/utf8>>
+ok
+> (ljson:print (ljson:get #("Address" "City") lfe-data))
+<<"Tórshavn"/utf8>>
+ok
+> (ljson:print (ljson:get #(("Phone Numbers") first "Type") lfe-data))
+<<"home">>
+ok
 ```
+
 
 Extract elements from JSON:
 
