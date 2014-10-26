@@ -14,6 +14,9 @@
 (deftest encode-string
   (is-equal #b("[97]") (ljson:encode "a")))
 
+(deftest encode-empty-string
+  (is-equal #b(91 93) (ljson:encode "")))
+
 (deftest encode-integer
   (is-equal #b("1") (ljson:encode 1)))
 
@@ -40,6 +43,9 @@
 
 (deftest decode-string
   (is-equal "a" (ljson:decode #b("[97]"))))
+
+(deftest decode-empty-string
+  (is-equal "" (ljson:decode #b(91 93))))
 
 (deftest decode-integer
   (is-equal 1 (ljson:decode #b("1"))))

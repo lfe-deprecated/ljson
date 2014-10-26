@@ -34,7 +34,7 @@
       ((== 1 (tuple_size data))
         (deconvert (element 1 data)))
       ('true data)))
-  ((data) (when (is_list data))
+  ((data) (when (and (is_list data) (> (length data) 0)))
     (let ((len (length data))
           (first (lists:nth 1 data)))
       (cond
