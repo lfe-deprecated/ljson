@@ -21,7 +21,7 @@ Just add it to your ``rebar.config`` deps:
   {deps, [
     ...
     {ljson, ".*",
-      {git, "git@github.com:thorgisl/ljson.git", "master"}}
+      {git, "git@github.com:lfex/ljson.git", "master"}}
       ]}.
 ```
 
