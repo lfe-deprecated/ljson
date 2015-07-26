@@ -106,7 +106,7 @@ ok
 ok
 > (ljson:print
     (ljson:decode
-	    #B(123 34 97 34 58 34 98 34 44 34 99 34 58 34 100 34 125)))
+      #B(123 34 97 34 58 34 98 34 44 34 99 34 58 34 100 34 125)))
 [{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}]
 ok
 >
@@ -269,37 +269,47 @@ Extract elements from the original converted data structure as well as
 our LFE data structure we just entered directly, above:
 
 ```cl
-> (ljson:print (ljson:get #("First Name") data))
+> (ljson:print (ljson:get '("First Name") data))
 <<"Jón"/utf8>>
 ok
-> (ljson:print (ljson:get #("Address" "City") data))
+> (ljson:print (ljson:get '("Address" "City") data))
 <<"Tórshavn"/utf8>>
 ok
-> (ljson:print (ljson:get #(("Phone Numbers") first "Type") data))
+> (ljson:print (ljson:get '("Phone Numbers" 1 "Type") data))
 <<"home">>
 ok
-> (ljson:print (ljson:get #("First Name") lfe-data))
+> (ljson:print (ljson:get '("First Name") lfe-data))
 <<"Jón"/utf8>>
 ok
-> (ljson:print (ljson:get #("Address" "City") lfe-data))
+> (ljson:print (ljson:get '("Address" "City") lfe-data))
 <<"Tórshavn"/utf8>>
 ok
-> (ljson:print (ljson:get #(("Phone Numbers") first "Type") lfe-data))
+> (ljson:print (ljson:get '("Phone Numbers" 1 "Type") lfe-data))
 <<"home">>
 ok
 ```
 
-
-Extract elements from JSON:
+You may also use atom or binary keys:
 
 ```cl
-> (ljson:print (ljson:get #("First Name") json-data #(json)))
-<<"\"J\\u00f3n\"">>
+> (ljson:print (ljson:get '(|Phone Numbers| 1 Number) lfe-data))
+<<"20 60 30">>
 ok
-> (ljson:print (ljson:get #("Address" "City") json-data #(json)))
-<<"\"T\\u00f3rshavn\"">>
+> (ljson:print (ljson:get '(#b("Phone Numbers") 1 #b("Number")) lfe-data))
+<<"20 60 30">>
 ok
-> (ljson:print (ljson:get #(("Phone Numbers") first "Type") json-data #(json)))
+```
+
+Extract elements directly from JSON:
+
+```cl
+> (ljson:print (ljson:get '("First Name") json-data #(json)))
+<<"\"J\\u00c3\\u00b3n\"">>
+ok
+> (ljson:print (ljson:get '("Address" "City") json-data #(json)))
+<<"\"T\\u00c3\\u00b3rshavn\"">>
+ok
+> (ljson:print (ljson:get '("Phone Numbers" 1 "Type") json-data #(json)))
 <<"\"home\"">>
 ok
 ```
@@ -310,9 +320,7 @@ ok
 The Argonauts that are rowing this thing consist of the following:
 
 * mochijson2 - for encoding
-* jiffy - for decoding
-* ej - for extracing and updating JSON data elements
-* jsx - for ``prettify`` and ``minify``
+* jsx - for decoding, ``prettify`` and ``minify``
 * dict - (wrapped as ``pairs``) for large key/value lists
 * proplists/lists of tuples - for small key/value lists
 

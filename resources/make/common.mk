@@ -2,11 +2,10 @@ ifeq ($(shell which erl),)
 $(error Can't find Erlang executable 'erl')
 exit 1
 endif
-PROJECT = ljson
+
 LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
-EXPM = $(BIN_DIR)/expm
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
@@ -17,13 +16,13 @@ LFETOOL=$(BIN_DIR)/lfetool
 else
 LFETOOL=lfetool
 endif
-ERL_LIBS=.:..:../ljson:$(shell $(LFETOOL) info erllibs)
+ERL_LIBS=$(shell pwd):$(shell $(LFETOOL) info erllibs)
 OS := $(shell uname -s)
 ifeq ($(OS),Linux)
-        HOST=$(HOSTNAME)
+		HOST=$(HOSTNAME)
 endif
 ifeq ($(OS),Darwin)
-        HOST = $(shell scutil --get ComputerName)
+		HOST = $(shell scutil --get ComputerName)
 endif
 
 $(BIN_DIR):
@@ -38,16 +37,12 @@ get-version:
 	@PATH=$(SCRIPT_PATH) $(LFETOOL) info version
 	@echo "Erlang/OTP, LFE, & library versions:"
 	@ERL_LIBS=$(ERL_LIBS) PATH=$(SCRIPT_PATH) erl \
-	-eval "lfe_io:format(\"~p~n\",['ljson-util':'get-versions'()])." \
+	-eval "lfe_io:format(\"~p~n\",['$(PROJECT)':'get-versions'()])." \
 	-noshell -s erlang halt
-
-$(EXPM): $(BIN_DIR)
-	@[ -f $(EXPM) ] || \
-	PATH=$(SCRIPT_PATH) lfetool install expm $(BIN_DIR)
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) download deps
 
 clean-ebin:
 	@echo "Cleaning ebin dir ..."
@@ -75,22 +70,22 @@ compile-tests: clean-eunit
 repl: compile
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting an LFE REPL ..."
-	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) repl
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) repl lfe +pc unicode
 
 repl-no-deps: compile-no-deps
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting an LFE REPL ..."
-	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) repl
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) $(LFETOOL) repl lfe +pc unicode
 
 shell: compile
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting an Erlang shell ..."
-	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) erl
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) erl + pc unicode
 
 shell-no-deps: compile-no-deps
 	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting an Erlang shell ..."
-	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) erl
+	@PATH=$(SCRIPT_PATH) ERL_LIBS=$(ERL_LIBS) erl + pc unicode
 
 clean: clean-ebin clean-eunit
 	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd clean || rebar clean
@@ -125,16 +120,5 @@ push-all:
 	git push upstream --tags
 
 install: compile
-	@echo "Installing ljson ..."
+	@echo "Installing $(PROJECT) ..."
 	@PATH=$(SCRIPT_PATH) lfetool install lfe
-
-upload: $(EXPM) get-version
-	@echo "Preparing to upload ljson ..."
-	@echo
-	@echo "Package file:"
-	@echo
-	@cat package.exs
-	@echo
-	@echo "Continue with upload? "
-	@read
-	$(EXPM) publish

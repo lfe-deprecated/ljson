@@ -70,7 +70,7 @@
       "c"
       (#b(100) (#b(101) (#b(102) #b(103))))
       42
-      #((#(#b(104) 1) #(#b(105) 2.4))))
+      (#(#b(104) 1) #(#b(105) 2.4)))
     (ljson:decode
       #b("[\"a\",\"b\",[99],[\"d\",[\"e\",[\"f\",\"g\"]]],42,{\"h\":1,\"i\":2.4}]"))))
 
@@ -95,25 +95,33 @@
   (ljson:encode (test-data)))
 
 (deftest get-top-level-data
-  (is-equal (binary ("Jón" utf8)) (ljson:get #("First Name") (test-data))))
+  (is-equal (binary ("Jón" utf8)) (ljson:get '("First Name") (test-data))))
 
 (deftest get-nested-data
-  (is-equal (binary ("Tórshavn" utf8)) (ljson:get #("Address" "City") (test-data))))
+  (is-equal (binary ("Tórshavn" utf8)) (ljson:get '("Address" "City") (test-data))))
 
 (deftest get-nested-data-with-index
   (is-equal #b("home")
-            (ljson:get #(("Phone Numbers") first "Type") (test-data))))
+            (ljson:get '("Phone Numbers" 1 "Type") (test-data))))
 
 (deftest get-top-level-json-data
   (is-equal #b("\"J\\u00c3\\u00b3n\"")
-            (ljson:get #("First Name") (test-json-data) #(json))))
+            (ljson:get '("First Name") (test-json-data) #(json))))
 
 (deftest get-nested-json-data
   (is-equal #b("\"T\\u00c3\\u00b3rshavn\"")
-            (ljson:get #("Address" "City") (test-json-data) #(json))))
+            (ljson:get '("Address" "City") (test-json-data) #(json))))
+
+(deftest get-nested-json-data-atom-keys
+  (is-equal #b("\"T\\u00c3\\u00b3rshavn\"")
+            (ljson:get '(Address City) (test-json-data) #(json))))
+
+(deftest get-nested-json-data-binary-keys
+  (is-equal #b("\"T\\u00c3\\u00b3rshavn\"")
+            (ljson:get '(#b("Address") #b("City")) (test-json-data) #(json))))
 
 (deftest get-nested-json-data-with-index
   (is-equal #b("\"home\"")
-            (ljson:get #(("Phone Numbers") first "Type")
+            (ljson:get '("Phone Numbers" 1 "Type")
                        (test-json-data)
                        #(json))))

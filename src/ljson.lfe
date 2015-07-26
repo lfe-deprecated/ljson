@@ -1,11 +1,7 @@
 (defmodule ljson
-  (export all)
-  (import
-    (from lutil-type
-          (binary? 1)
-          (dict? 1)
-          (string? 1)
-          (tuple? 1))))
+  (export all))
+
+(include-lib "clj/include/predicates.lfe")
 
 (defun pairs ()
   (dict:new))
@@ -18,7 +14,8 @@
     (mochijson2:encode (convert data))))
 
 (defun decode (data)
-  (deconvert (jiffy:decode data)))
+  (deconvert
+   (jsx:decode (unicode:characters_to_binary data))))
 
 (defun convert (data)
   (cond
@@ -29,20 +26,10 @@
     ('true data)))
 
 (defun deconvert
-  ((data) (when (is_tuple data))
-    (cond
-      ((== 1 (tuple_size data))
-        (deconvert (element 1 data)))
-      ('true data)))
-  ((data) (when (and (is_list data) (> (length data) 0)))
-    (let ((len (length data))
-          (first (lists:nth 1 data)))
-      (cond
-        ((and (== 1 len) (is_tuple first))
-          first)
-        ('true data))))
+  ((`(,data)) (when (is_tuple data))
+   data)
   ((data)
-    data))
+   data))
 
 (defun pairs? (data)
   (dict? data))
@@ -54,12 +41,12 @@
   (cond
     ((orelse (string? data) (binary? data) (== options #(json)))
       (encode
-        (ej:get keys (decode data))))
+        (ljson-util:get-in keys (decode data))))
     ('true
-      (ej:get keys data))))
+      (ljson-util:get-in keys data))))
 
 (defun get (keys data)
-  (get keys data #()))
+  (get keys data ()))
 
 (defun prettify (data)
   (print-str (jsx:prettify data)))

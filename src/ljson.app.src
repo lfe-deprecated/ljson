@@ -2,10 +2,10 @@
 {application, 'ljson',
  [
   %% A quick description of the application.
-  {description, "My project description..."},
+  {description, "An LFE library which provides a unified JSON experience."},
 
   %% The version of the application
-  {vsn, "0.0.1"},
+  {vsn, "0.0.2"},
 
   %% All modules used by the application.
   {modules,
