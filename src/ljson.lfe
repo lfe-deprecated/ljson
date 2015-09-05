@@ -59,3 +59,9 @@
 
 (defun print-str (data)
   (io:format "~ts~n" (list data)))
+
+(defun read (filename)
+  (case (file:read_file filename)
+    (`#(ok ,data) (decode data))
+    (err err)))
+
