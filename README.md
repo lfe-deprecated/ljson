@@ -2,7 +2,16 @@
 
 <a href="http://dropr.com/coenhamelink/15218/jason_and_the_argonauts/+?p=97582"><img src="resources/images/jason-argonauts-small.png" /></a>
 
-## Introduction
+#### Contents
+
+* [Introduction](#introduction-)
+* [Dependencies](#dependencies-)
+* [Installation](#installation-)
+* [Usage](#usage-)
+* [Future](#future-)
+
+
+## Introduction [&#x219F;](#contents)
 
 This library was educated by
 [Chiron](http://en.wikipedia.org/wiki/Chiron#Students)
@@ -13,7 +22,15 @@ revealed by the
 [Cloud Goddess](http://en.wikipedia.org/wiki/Nephele).
 
 
-## Installation
+## Dependencies [&#x219F;](#contents)
+
+As of version 0.4.0, this project assumes that you have
+[rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
+It no longer uses the old version of rebar. If you do not wish to use rebar3,
+you may use the most recent rebar2-compatible release of ljson: 0.3.1.
+
+
+## Installation [&#x219F;](#contents)
 
 Just add it to your ``rebar.config`` deps:
 
@@ -32,7 +49,7 @@ And then do the usual:
 ```
 
 
-## Usage
+## Usage [&#x219F;](#contents)
 
 The following usage examples are all done from the LFE REPL:
 
@@ -315,7 +332,7 @@ ok
 ```
 
 
-## Under the Deck
+## Under the Deck [&#x219F;](#contents)
 
 The Argonauts that are rowing this thing consist of the following:
 
