@@ -1,6 +1,7 @@
 (defmodule ljson
   (export all))
 
+(include-lib "clj/include/compose.lfe")
 (include-lib "clj/include/predicates.lfe")
 
 (defun pairs ()
@@ -10,12 +11,16 @@
   (dict:from_list data))
 
 (defun encode (data)
-  (unicode:characters_to_binary
-    (mochijson2:encode (convert data))))
+  (-> data
+      (convert)
+      (mochijson2:encode)
+      (unicode:characters_to_binary)))
 
 (defun decode (data)
-  (deconvert
-   (jsx:decode (unicode:characters_to_binary data))))
+  (-> data
+      (unicode:characters_to_binary)
+      (jsx:decode)
+      (deconvert)))
 
 (defun convert (data)
   (cond
@@ -55,10 +60,10 @@
   (jsx:minify data))
 
 (defun print (data)
-  (io:format "~tp~n" (list data)))
+  (lfe_io:format "~p~n" (list data)))
 
 (defun print-str (data)
-  (io:format "~ts~n" (list data)))
+  (lfe_io:format "~s~n" (list data)))
 
 (defun read (filename)
   (case (file:read_file filename)
