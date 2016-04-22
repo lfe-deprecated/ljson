@@ -1,12 +1,14 @@
 (defmodule ljson-util
   (export all))
 
-(defun get-ljson-version ()
-  (lutil:get-app-src-version "src/ljson.app.src"))
+(defun get-version ()
+  (lr3-ver-util:get-app-version 'ljson))
 
 (defun get-versions ()
-  (++ (lutil:get-version)
-      `(#(ljson ,(get-ljson-version)))))
+  (++ (lr3-ver-util:get-versions)
+      `(#(kla ,(lr3-ver-util:get-app-version 'kla))
+        #(clj ,(lr3-ver-util:get-app-version 'clj))
+        #(ljson ,(get-version)))))
 
 (defun get
   ((index data) (when (is_integer index))
