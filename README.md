@@ -1,6 +1,10 @@
 # ljson
 
-<a href="http://dropr.com/coenhamelink/15218/jason_and_the_argonauts/+?p=97582"><img src="resources/images/jason-argonauts-small.png" /></a>
+[![][ljson-logo]][ljson-logo-large]
+
+[ljson-logo]: priv/images/jason-argonauts-small.png
+[ljson-logo-large]: http://dropr.com/coenhamelink/15218/jason_and_the_argonauts/+?p=97582
+
 
 #### Contents
 
