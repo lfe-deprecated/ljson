@@ -1,9 +1,14 @@
 # ljson
 
-[![][ljson-logo]][ljson-logo-large]
+[![Build Status][travis badge]][travis]
+[![LFE Versions][lfe badge]][lfe]
+[![Erlang Versions][erlang badge]][versions]
+[![Tags][github tags badge]][github tags]
+[![Downloads][hex downloads]][hex package]
 
-[ljson-logo]: priv/images/jason-argonauts-small.png
-[ljson-logo-large]: http://dropr.com/coenhamelink/15218/jason_and_the_argonauts/+?p=97582
+*An LFE library which provides a unified JSON experience*
+
+[![Project Logo][logo]][logo-large]
 
 
 #### Contents
@@ -13,6 +18,7 @@
 * [Installation](#installation-)
 * [Usage](#usage-)
 * [Future](#future-)
+* [License](#license-)
 
 
 ## Introduction [&#x219F;](#contents)
@@ -29,27 +35,26 @@ revealed by the
 ## Dependencies [&#x219F;](#contents)
 
 As of version 0.4.0, this project assumes that you have
-[rebar3](https://github.com/rebar/rebar3) installed somwhere in your ``$PATH``.
+[rebar3](https://github.com/rebar/rebar3) installed somwhere in your `$PATH`.
 It no longer uses the old version of rebar. If you do not wish to use rebar3,
 you may use the most recent rebar2-compatible release of ljson: 0.3.1.
 
 
 ## Installation [&#x219F;](#contents)
 
-Just add it to your ``rebar.config`` deps:
+Just add it to your `rebar.config` deps:
 
 ```erlang
-  {deps, [
-    ...
-    {ljson, ".*",
-      {git, "git@github.com:lfex/ljson.git", "master"}}
-      ]}.
+{deps, [
+  ...
+  {ljson, {git, "git@github.com:lfex/ljson.git", "master"}}
+    ]}.
 ```
 
 And then do the usual:
 
 ```bash
-    $ make compile
+$ make compile
 ```
 
 
@@ -261,37 +266,37 @@ Extract elements from the original converted data structure as well as
 our LFE data structure we just entered directly, above:
 
 ```cl
-> (ljson:get '("First Name") data)
+> (ljson:get data '("First Name"))
 #"Jón"
-> (ljson:get '("Address" "City") data)
+> (ljson:get data '("Address" "City"))
 #"Tórshavn"
-> (ljson:get '("Phone Numbers" 1 "Type") data)
+> (ljson:get data '("Phone Numbers" 1 "Type"))
 #"home"
-> (ljson:get '("First Name") lfe-data)
+> (ljson:get lfe-data '("First Name") )
 #"Jón"
-> (ljson:get '("Address" "City") lfe-data)
+> (ljson:get lfe-data '("Address" "City")data)
 #"Tórshavn"
-> (ljson:get '("Phone Numbers" 1 "Type") lfe-data)
+> (ljson:get lfe-data '("Phone Numbers" 1 "Type"))
 #"home"
 ```
 
 You may also use atom or binary keys:
 
 ```cl
-> (ljson:get '(|Phone Numbers| 1 Number) lfe-data)
+> (ljson:get lfe-data '(|Phone Numbers| 1 Number))
 #"20 60 30"
-> (ljson:get '(#b("Phone Numbers") 1 #b("Number")) lfe-data)
+> (ljson:get lfe-data '(#"Phone Numbers" 1 #"Number"))
 #"20 60 30"
 ```
 
 Extract elements directly from JSON:
 
 ```cl
-> (ljson:get '("First Name") json-data #(json))
+> (ljson:get json-data '("First Name") #(json))
 #"\"J\\u00f3n\""
-> (ljson:get '("Address" "City") json-data #(json))
+> (ljson:get json-data '("Address" "City") #(json))
 #"\"T\\u00f3rshavn\""
-> (ljson:get '("Phone Numbers" 1 "Type") json-data #(json))
+> (ljson:get json-data '("Phone Numbers" 1 "Type") #(json))
 #"\"home\""
 ```
 
@@ -301,8 +306,38 @@ Extract elements directly from JSON:
 The Argonauts that are rowing this thing consist of the following:
 
 * mochijson2 - for encoding of nested data
-* jsx - for decoding, ``prettify`` and ``minify``
-* dict - (wrapped as ``pairs``) for large key/value lists
+* jsx - for decoding, `prettify` and `minify`
+* dict - (wrapped as `pairs`) for large key/value lists
 * proplists/lists of tuples - for small key/value lists
 
 
+## License [&#x219F;](#contents)
+
+Apache Version 2 License
+
+Copyright © 2014-2015, Dreki Þórgísl
+
+Copyright © 2015, arpunk
+
+Copyright © 2015-2016, Duncan McGreggor <oubiwann@gmail.com>
+
+
+<!-- Named page links below: /-->
+
+[logo]: priv/images/jason-argonauts-small.png
+[logo-large]: http://dropr.com/coenhamelink/15218/jason_and_the_argonauts/+?p=97582
+[org]: https://github.com/lfex
+[github]: https://github.com/lfex/ljson
+[gitlab]: https://gitlab.com/lfex/ljson
+[travis]: https://travis-ci.org/lfex/ljson
+[travis badge]: https://img.shields.io/travis/lfex/ljson.svg
+[lfe]: https://github.com/rvirding/lfe
+[lfe badge]: https://img.shields.io/badge/lfe-1.2.0-blue.svg
+[erlang badge]: https://img.shields.io/badge/erlang-R15%20to%2019.1-blue.svg
+[versions]: https://github.com/lfex/ljson/blob/master/.travis.yml
+[github tags]: https://github.com/lfex/ljson/tags
+[github tags badge]: https://img.shields.io/github/tag/lfex/ljson.svg
+[github downloads]: https://img.shields.io/github/downloads/lfex/ljson/total.svg
+[hex badge]: https://img.shields.io/hexpm/v/ljson.svg?maxAge=2592000
+[hex package]: https://hex.pm/packages/ljson
+[hex downloads]: https://img.shields.io/hexpm/dt/ljson.svg
