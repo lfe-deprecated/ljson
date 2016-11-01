@@ -6,23 +6,25 @@
 
 (defun get-versions ()
   (++ (lr3-ver-util:get-versions)
-      `(#(kla ,(lr3-ver-util:get-app-version 'kla))
-        #(clj ,(lr3-ver-util:get-app-version 'clj))
-        #(ljson ,(get-version)))))
+      `(#(ljson ,(get-version)))))
+
+(defun get-value (data)
+   (case data
+     ('false 'undefined)
+     (`#(,_key #(,value)) value)
+     (`#(,_key ,value) value)
+     (`#(,value) value)
+     (value value)))
 
 (defun get
   ((index data) (when (is_integer index))
-   (case (lists:nth index data)
-     (`#(,value) value)
-     (value value)))
+   (get-value (lists:nth index data)))
   ((key data)
-   (case (lists:keyfind (convert-key key) 1 data)
-     ('false 'undefined)
-     (`#(,_key #(,value)) value)
-     (`#(,_key ,value) value))))
+   (get-value (lists:keyfind (convert-key key) 1 data))))
 
-(defun get-in (keys data)
+(defun get-in (data keys)
   (lists:foldl #'get/2 data keys))
+  ; (clj:get-in data (lists:map #'convert-key/1 keys))
 
 (defun convert-key
   ((key) (when (is_atom key))

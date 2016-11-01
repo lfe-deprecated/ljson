@@ -1,9 +1,6 @@
 (defmodule ljson
   (export all))
 
-(include-lib "clj/include/compose.lfe")
-(include-lib "clj/include/predicates.lfe")
-
 (defun pairs ()
   (dict:new))
 
@@ -11,22 +8,22 @@
   (dict:from_list data))
 
 (defun encode (data)
-  (-> data
-      (convert)
-      (mochijson2:encode)
-      (unicode:characters_to_binary)))
+  (clj:-> data
+          (convert)
+          (mochijson2:encode)
+          (unicode:characters_to_binary)))
 
 (defun decode (data)
-  (-> data
-      (unicode:characters_to_binary)
-      (jsx:decode)
-      (deconvert)))
+  (clj:-> data
+          (unicode:characters_to_binary)
+          (jsx:decode)
+          (deconvert)))
 
 (defun convert (data)
   (cond
     ((pairs? data)
       (pairs->list data))
-    ((tuple? data)
+    ((clj:tuple? data)
       (list data))
     ('true data)))
 
@@ -37,21 +34,21 @@
    data))
 
 (defun pairs? (data)
-  (dict? data))
+  (clj:dict? data))
 
 (defun pairs->list (pairs)
   (dict:to_list pairs))
 
-(defun get (keys data options)
+(defun get (data keys options)
   (cond
-    ((orelse (string? data) (binary? data) (== options #(json)))
+    ((orelse (clj:string? data) (clj:binary? data) (== options #(json)))
       (encode
-        (ljson-util:get-in keys (decode data))))
+        (ljson-util:get-in (decode data) keys)))
     ('true
-      (ljson-util:get-in keys data))))
+      (ljson-util:get-in data keys))))
 
-(defun get (keys data)
-  (get keys data ()))
+(defun get (data keys)
+  (get data keys '()))
 
 (defun prettify (data)
   (print-str (jsx:prettify data)))
