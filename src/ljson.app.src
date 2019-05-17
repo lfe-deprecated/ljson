@@ -5,7 +5,7 @@
   {description, "An LFE library which provides a unified JSON experience"},
 
   %% The version of the application
-  {vsn, "0.6.0-rc1"},
+  {vsn, "0.7.0"},
 
   %% All modules used by the application.
   {modules,
