@@ -1,5 +1,7 @@
 # ljson
 
+DEPRECATED - use the [jsx](https://github.com/talentdeficit/jsx) Erlang library instead!
+
 [![Build Status][travis badge]][travis]
 [![LFE Versions][lfe badge]][lfe]
 [![Erlang Versions][erlang badge]][versions]
